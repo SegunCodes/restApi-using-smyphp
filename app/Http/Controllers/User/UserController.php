@@ -6,7 +6,6 @@ use SmyPhp\Core\Controller\Controller;
 use App\Models\User;
 use SmyPhp\Core\Http\Request;
 use SmyPhp\Core\Http\Response;
-use SmyPhp\Core\Application;
 use App\Http\Middleware\Authenticate;
 use App\Providers\Token;
 use SmyPhp\Core\DatabaseModel;
