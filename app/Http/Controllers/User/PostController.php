@@ -7,12 +7,12 @@ use SmyPhp\Core\Http\Request;
 use SmyPhp\Core\Http\Response;
 use SmyPhp\Core\DatabaseModel;
 use SmyPhp\Core\Application;
+use SmyPhp\Core\Auth;
 use App\Models\Post;
 use App\Http\Middleware\Authenticate;
 use App\Providers\Token;
 use App\Providers\Image;
 use App\Http\Middleware\ApiMiddleware;
-use SmyPhp\Core\Authorization\Server;
 
 class PostController extends Controller{
 
@@ -23,6 +23,7 @@ class PostController extends Controller{
     public function create(Request $request, Response $response){
         $title = $_POST["title"];
         $body = $_POST["body"];
+        $user = Auth::User();
         $filename = null;
         if (empty($title) || empty($body)) {
             return $response->json([
@@ -37,8 +38,9 @@ class PostController extends Controller{
             $convertImage = Image::convert($base64Image, $path, $filename);
         }
         // add to posts database
-        $stmt = DatabaseModel::prepare("INSERT INTO posts SET title = :title, body = :body, image = :image");
+        $stmt = DatabaseModel::prepare("INSERT INTO posts SET user_id =  :user_id, title = :title, body = :body, image = :image");
         $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':user_id', $user);
         $stmt->bindParam(':body', $body);
         $stmt->bindParam(':image', $filename);
         if($stmt->execute()){
