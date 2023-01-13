@@ -33,8 +33,14 @@ class PostController extends Controller{
         }
         if(isset($_POST["file"])){
             $base64Image = $_POST["file"];
+            if (empty($base64Image)) {
+                return $response->json([
+                    "success" => false,
+                    "message" => "Image field is required"
+                ], 400);
+            }
             $path = Application::$ROOT_DIR."/routes/assets/uploads";
-            $filename = "uploads".uniqid()."jpg";
+            $filename = "uploads_".uniqid().".jpg";
             $convertImage = Image::convert($base64Image, $path, $filename);
         }
         // add to posts database
