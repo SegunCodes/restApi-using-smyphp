@@ -57,12 +57,34 @@ class PostController extends Controller{
         }
     }
 
-    public function viewAll(){
-
+    public function viewAll(Request $request, Response $response){
+        $allPosts = new Post;
+        return $response->json([
+            "success" => true,
+            "message" => "Ok",
+            "data" => $allPosts->findAll()
+        ],200);
     }
 
-    public function viewOne(){
-        
+    public function viewOne(Request $request, Response $response){
+        $id = $request->getParams();
+        $post = new Post;
+        $value = $post->findAllWhere([
+            'id' => implode("",$id)
+        ]);
+        if(!empty($value)){
+            return $response->json([
+                "success" => true,
+                "message" => "Ok",
+                "data" => $value
+            ],200);
+        }else{
+            return $response->json([
+                "success" => true,
+                "message" => "invalid post id",
+                "data" => []
+            ],200);
+        }
     }
 
     public function edit(){

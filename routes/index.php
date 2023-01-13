@@ -22,5 +22,7 @@ $app->router->get('/home', [AppController::class, 'home']);
 $app->router->post('/login', [UserController::class, 'login']);
 $app->router->post('/register', [UserController::class, 'register']);
 $app->router->post('/create', [PostController::class, 'create']);
+$app->router->get('/view-all', [PostController::class, 'viewAll']);
+$app->router->get('/view/{id}', [PostController::class, 'viewOne']);
 
 $app->run();
