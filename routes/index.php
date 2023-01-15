@@ -24,5 +24,7 @@ $app->router->post('/register', [UserController::class, 'register']);
 $app->router->post('/create', [PostController::class, 'create']);
 $app->router->get('/view-all', [PostController::class, 'viewAll']);
 $app->router->get('/view/{id}', [PostController::class, 'viewOne']);
+$app->router->post('/edit/{id}', [PostController::class, 'edit']);
+$app->router->post('/delete/{id}', [PostController::class, 'delete']);
 
 $app->run();
